@@ -1,6 +1,7 @@
 package de.fi.hallo.unterordner;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Demo {
 
-    @Qualifier("upper")
+    //@Qualifier("upper")
     private final Translator translator;
 
     @Value("${Demo.message}")
@@ -30,5 +31,10 @@ public class Demo {
     @PostConstruct
     public void foo() {
         System.out.println(translator.translate(message));
+    }
+
+   @PreDestroy
+    public void bar() {
+        System.out.println("Und tschuess");
     }
 }
