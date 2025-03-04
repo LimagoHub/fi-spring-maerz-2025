@@ -1,6 +1,7 @@
 package de.fi.webapp.presentation.controller.v1;
 
 
+import de.fi.webapp.presentation.dto.PersonDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/v1/personen")
 
-public class PersonenController {
+public class PersonenQueryController {
     @Operation(summary = "Liefert eine Person")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Person gefunden",
