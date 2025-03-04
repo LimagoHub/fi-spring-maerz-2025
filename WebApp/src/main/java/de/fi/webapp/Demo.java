@@ -16,7 +16,10 @@ public class Demo {
 
     @PostConstruct
     public void foo() {
-        //var person = PersonEntity.builder().id(UUID.randomUUID()).vorname("Jane").nachname("Doe").build();
+        var person = PersonEntity.builder().id(UUID.randomUUID()).vorname("Jane").nachname("Doe").build();
+
+
+
         var persons = personenRepository.findAll();
         persons.forEach(System.out::println);
     }
