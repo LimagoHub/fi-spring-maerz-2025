@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,11 +72,15 @@ class PersonenQueryControllerTest {
     @Test
     void test4() throws Exception {
 
+        PersonDto dto = PersonDto.builder().id(UUID.randomUUID()).vorname("John").nachname("Doe").build();
+
+        HttpEntity requestEntity = new HttpEntity(dto);
+
         var personen = List.of(Person.builder().id(UUID.randomUUID()).vorname("John").nachname("Doe").build(),Person.builder().id(UUID.randomUUID()).vorname("John").nachname("Rambo").build());
 
         when(serviceMock.findeAlle()).thenReturn(personen);
 
-        ResponseEntity<List<PersonDto>> entity = restTemplate.exchange("/v1/personen", HttpMethod.GET,null,new ParameterizedTypeReference<List<PersonDto>>() { });
+        ResponseEntity<List<PersonDto>> entity = restTemplate.exchange("/v1/personen", HttpMethod.GET,requestEntity,new ParameterizedTypeReference<List<PersonDto>>() { });
 
         List<PersonDto> dto = entity.getBody();
         assertEquals(2, dto.size());
