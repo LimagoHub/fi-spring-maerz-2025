@@ -72,9 +72,9 @@ class PersonenQueryControllerTest {
     @Test
     void test4() throws Exception {
 
-        PersonDto dto = PersonDto.builder().id(UUID.randomUUID()).vorname("John").nachname("Doe").build();
+        PersonDto rdto = PersonDto.builder().id(UUID.randomUUID()).vorname("John").nachname("Doe").build();
 
-        HttpEntity requestEntity = new HttpEntity(dto);
+        HttpEntity requestEntity = new HttpEntity(rdto);
 
         var personen = List.of(Person.builder().id(UUID.randomUUID()).vorname("John").nachname("Doe").build(),Person.builder().id(UUID.randomUUID()).vorname("John").nachname("Rambo").build());
 

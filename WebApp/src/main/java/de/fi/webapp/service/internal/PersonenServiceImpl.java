@@ -6,6 +6,7 @@ import de.fi.webapp.service.PersonenServiceException;
 import de.fi.webapp.service.mapper.PersonMapper;
 import de.fi.webapp.service.model.Person;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.internal.constraintvalidators.bv.size.SizeValidatorForArray;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -25,9 +26,12 @@ public class PersonenServiceImpl implements PersonenService {
     private final PersonMapper personMapper;
     @Qualifier("Antipathen")
     private final List<String> anthipathen;
+    private final SizeValidatorForArray sizeValidatorForArray;
 
     @Override
     public void speichern(final Person person) throws PersonenServiceException {
+
+
         try {
             if(person == null) throw new PersonenServiceException("Person darf nicht null sein");
             if(person.getVorname() == null || person.getVorname().length() < 2) throw new PersonenServiceException("Vorname zu kurz");
