@@ -1,12 +1,16 @@
 package de.fi.webapp.service.model;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.UUID;
+
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Setter(AccessLevel.PRIVATE)
 public class Schwein {
-
+    private UUID id;
     private String name;
     private int gewicht;
 
