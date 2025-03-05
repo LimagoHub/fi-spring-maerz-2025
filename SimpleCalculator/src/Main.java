@@ -5,6 +5,9 @@ import math.CalculatorImpl;
 import math.CalculatorLogger;
 import math.CalculatorSecurity;
 
+import java.time.Duration;
+import java.time.Instant;
+
 public class Main {
     public static void main(String[] args) {
                                 // 1000
@@ -16,5 +19,12 @@ public class Main {
         Client client = new Client(calculator);
 
         client.go();
+
+        Instant start = Instant.now();
+        ///
+        Instant end = Instant.now();
+        Duration duration = Duration.between(start, end);
+
+        System.out.println(duration.toMillis());
     }
 }

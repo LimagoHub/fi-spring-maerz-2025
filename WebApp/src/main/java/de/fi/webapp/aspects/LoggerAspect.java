@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
 public class LoggerAspect {
 
 
-    @Before("execution(public * de.fi.webapp.presentation.controller.v1.PersonenQueryController.*(..))")
+
+    @Before(value = "PointCuts.serviceMethods()")
     public void doLog(JoinPoint joinPoint) {
         log.warn(joinPoint.getSignature().getName() + " wurde gerufen");
     }
 
-    @AfterReturning(value = "execution(public * de.fi.webapp.presentation.controller.v1.PersonenQueryController.*(..))", returning = "result")
+    @AfterReturning(value = "PointCuts.personenControllerMethod()", returning = "result")
     public void doReturn(JoinPoint joinPoint, Object result) {
         log.warn(joinPoint.getSignature().getName() + " hat " + result + " geliefert");
     }

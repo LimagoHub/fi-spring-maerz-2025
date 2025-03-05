@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-//@Service
+@Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = PersonenServiceException.class, propagation = Propagation.REQUIRED,isolation = Isolation.READ_COMMITTED)
 public class PersonenServiceImpl implements PersonenService {

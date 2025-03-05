@@ -30,7 +30,7 @@ public class PersonConfig {
         return List.of("Banaa", "Apple", "Cherry", "Raspberry");
     }
 
-    @Bean
+    //@Bean
     public PersonenService personenService(final PersonenRepository personenRepository, final PersonMapper mapper,    @Qualifier("Antipathen") final List<String> antipathen) {
         return new PersonenServiceImpl(personenRepository, mapper, antipathen);
     }

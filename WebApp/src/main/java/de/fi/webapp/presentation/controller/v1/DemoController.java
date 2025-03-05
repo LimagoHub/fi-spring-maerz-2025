@@ -1,6 +1,7 @@
 package de.fi.webapp.presentation.controller.v1;
 
 
+import de.fi.webapp.aspects.Dozent;
 import de.fi.webapp.presentation.dto.PersonDto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/demo")
+@Dozent
 public class DemoController {
 
     @GetMapping(path="/gruss", produces = MediaType.TEXT_PLAIN_VALUE)
