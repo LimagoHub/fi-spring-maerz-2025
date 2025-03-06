@@ -3,12 +3,13 @@ package de.fi.webapp;
 import de.fi.webapp.persistence.PersonenRepository;
 import de.fi.webapp.persistence.entity.PersonEntity;
 import jakarta.annotation.PostConstruct;
+import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
+@Named
 @RequiredArgsConstructor
 public class Demo {
     private final PersonenRepository personenRepository;
