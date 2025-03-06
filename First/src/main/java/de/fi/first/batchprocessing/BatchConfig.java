@@ -75,7 +75,11 @@ public class BatchConfig {
 
                 .<Person, Person>chunk(10, transactionManager)
                 .reader(reader)
-
+                .faultTolerant()
+                //.skipLimit(2)
+                //.skip(FlatFileParseException.class)
+                //.noSkip(FileNotFoundException.class)
+                .skipPolicy(createSkipPolicy())
                 .processor(processor)
                 .writer(writer)
                 .build();
@@ -85,12 +89,54 @@ public class BatchConfig {
     public Job importUserJob(JobRepository jobRepository, JobCompletionNotificationListener listener, Step step1) {
         return new JobBuilder("importUserJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
+
                 .listener(listener)
+
                 .flow(step1)
                 .end()
                 .build();
     }
 
+    @Bean
+    SkipPolicy createSkipPolicy() {
+
+        return new SkipPolicy() {
+
+            private final Logger logger = LoggerFactory.getLogger("badRecordLogger");
+
+            @Override
+            public boolean shouldSkip(final Throwable exception, final long skipCount) throws SkipLimitExceededException {
+
+                if (exception instanceof FileNotFoundException) {
+                    return false;
+                } else if (exception instanceof FlatFileParseException && skipCount <= 2) {
+                    FlatFileParseException ffpe = (FlatFileParseException) exception;
+
+                    StringBuilder errorMessage = new StringBuilder();
+                    errorMessage.append("An error occured while processing the ");
+                    errorMessage.append(ffpe.getLineNumber());
+                    errorMessage.append(" line of the file '");
+
+                    Pattern pattern = Pattern.compile(".*(\\W\\w+\\.csv).*");
+                    Matcher matcher = pattern.matcher(ffpe.toString());
+                    if (matcher.matches())
+                        errorMessage.append(matcher.group(1));
+                    else
+                        errorMessage.append("unknown");
+                    errorMessage.append("'. Below was the faulty input.");
+                    errorMessage.append("\n");
+                    errorMessage.append(ffpe.getInput());
+                    errorMessage.append("\n");
+                    logger.error("{}", errorMessage.toString());
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+
+        };
+    }
 
 
 }

@@ -4,7 +4,15 @@ package de.fi.first.batchprocessing;
 import de.fi.first.entity.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.step.skip.SkipLimitExceededException;
+import org.springframework.batch.core.step.skip.SkipPolicy;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.file.FlatFileParseException;
+import org.springframework.context.annotation.Bean;
+
+import java.io.FileNotFoundException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PersonItemProcessor implements ItemProcessor<Person, Person> {
 
@@ -25,7 +33,6 @@ public class PersonItemProcessor implements ItemProcessor<Person, Person> {
 
         return transformedPerson;
     }
-
 
 
 
