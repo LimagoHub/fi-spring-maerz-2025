@@ -1,5 +1,6 @@
 package de.fi.simplepart.batch;
 
+import de.fi.simplepart.pojo.Umsatz;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
@@ -9,7 +10,9 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ExecutionContext;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +26,8 @@ import java.net.MalformedURLException;
 @Configuration
 public class PartitionBatchConfig {
 
+
+    // Ersetzen durch junk step
     @Bean
     public Step slaveStep(JobRepository jobRepository, PlatformTransactionManager transactionManager)
     {
@@ -67,5 +72,17 @@ public class PartitionBatchConfig {
     public TaskExecutor taskExecutor() {
         return new SimpleAsyncTaskExecutor();
     }
+
+    @Bean
+    public ItemWriter<Umsatz> writer() {
+        return new ItemWriter<Umsatz>() {
+
+            @Override
+            public void write(Chunk<? extends Umsatz> chunk) throws Exception {
+                System.out.println(chunk);
+            }
+        };
+    }
+
 
 }
